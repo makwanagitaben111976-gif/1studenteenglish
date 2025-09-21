@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vishnu School English Subject</title>
+  <title>Vishnu School student 1 English Subject</title>
   <style>
     body {
       margin: 0;
@@ -16,7 +16,6 @@
       flex-direction: column;
     }
     
-    /* This section makes the iframe responsive */
     .pdf-container {
       width: 100%;
       height: 100%;
@@ -30,8 +29,20 @@
       border: none;
     }
 
-    /* This CSS hides the buttons within the iframe. */
-    /* Note: This might not work on all platforms due to security policies. */
+    /* સ્ક્રીનશોટ અને સ્ક્રીન રેકોર્ડિંગને અટકાવવા માટે */
+    /* જ્યારે યુઝર સ્ક્રીન રેકોર્ડિંગ અથવા સ્ક્રીનશોટ લે ત્યારે સ્ક્રીન કાળી થઈ જશે */
+    .no-screenshot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      z-index: 9999;
+      display: none;
+    }
+
+    /* આ CSS બટનને છુપાવશે, જેમ કે તમે પહેલા પૂછ્યું હતું */
     .button-to-hide {
       display: none;
     }
@@ -42,10 +53,35 @@
     <iframe src="https://drive.google.com/file/d/1EgBgBKhkUBFhbjZYVdT_UMikvi_c-iIO/preview" allow="autoplay"></iframe>
   </div>
 
+  <div class="no-screenshot"></div>
+
   <script>
-    // This JavaScript can also be used to hide elements dynamically.
-    // It's a more reliable method if CSS alone doesn't work.
-    // For this example, we assume the button has a class of `button-to-hide`.
+    // આ કોડ સ્ક્રીનશોટ અને સ્ક્રીન રેકોર્ડિંગને અટકાવવા માટે છે
+    const noScreenshotDiv = document.querySelector('.no-screenshot');
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        noScreenshotDiv.style.display = 'block';
+      } else {
+        noScreenshotDiv.style.display = 'none';
+      }
+    });
+
+    // કીબોર્ડ શોર્ટકટને બ્લોક કરવા માટે
+    document.addEventListener('keyup', (e) => {
+      // 'PrtSc' કી
+      if (e.key === 'PrintScreen' || e.key === '3') {
+        alert("Screen recording and screenshots are not allowed.");
+        e.preventDefault();
+      }
+    });
+
+    // જમણી-ક્લિક (Right Click) ને બ્લોક કરવા માટે
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    // આ JavaScript પણ બટનને ડાયનેમિકલી છુપાવવા માટે છે
     document.addEventListener('DOMContentLoaded', (event) => {
       const button = document.querySelector('.button-to-hide');
       if (button) {
